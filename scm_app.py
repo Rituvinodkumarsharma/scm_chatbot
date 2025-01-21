@@ -1,7 +1,8 @@
 import streamlit as st
 import cohere
 import pandas as pd
-import datetime
+import time  # Import time for precise timestamps
+from datetime import datetime  # For formatting timestamps
 
 # Initialize Cohere API
 COHERE_API_KEY = "vPjqsnaockV4uYWjNcv56thveWsekn4D3jJVzBLE"  # Replace with your API key
@@ -44,17 +45,23 @@ if st.sidebar.button("New Conversation"):
     st.session_state.messages = []
     st.session_state.selected_history = None
 
-# History section
+# History section: Only show distinct questions in the sidebar
 st.sidebar.subheader("History")
-for key in sorted(st.session_state.history.keys(), reverse=True):  # Show recent history first
-    if st.sidebar.button(f"View {key}"):
-        st.session_state.selected_history = key
+displayed_questions = set()  # To track displayed questions and avoid duplicates
+
+for key in sorted(st.session_state.history.keys(), reverse=True):  # Show most recent history first
+    # Get the user's question from the history entry (first user message)
+    user_question = st.session_state.history[key][0][1]  # Get the first message (User's question)
+
+    if user_question not in displayed_questions:
+        button_key = f"view_{key}"  # Generate a unique key for each button
+        if st.sidebar.button(f"View: {user_question}", key=button_key):  # Use unique key for each button
+            st.session_state.selected_history = key
+        displayed_questions.add(user_question)  # Add question to the set to prevent duplicates
 
 # "Current Conversation" button
 if st.sidebar.button("Current Conversation"):
     st.session_state.selected_history = None
-
-
 
 # Main interface
 st.title("Supply Chain Management Chatbot")
@@ -81,8 +88,8 @@ def handle_input():
         st.session_state.messages.append(("User", user_input))
         st.session_state.messages.append(("Bot", final_response))
 
-        # Save conversation to history
-        conversation_id = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        # Save conversation to history with precise timestamp (milliseconds)
+        conversation_id = f"{time.time():.6f}"  # Using time.time() with 6 decimal places for milliseconds
         st.session_state.history[conversation_id] = st.session_state.messages[:]
 
         # Clear user input field
@@ -90,19 +97,25 @@ def handle_input():
 
 # Display selected history or ongoing conversation
 if st.session_state.selected_history:
-    st.subheader(f"Viewing History from: {st.session_state.selected_history}")
+    # Display the question-answer pair of the selected history
     selected_messages = st.session_state.history[st.session_state.selected_history]
     for i in range(0, len(selected_messages), 2):
         st.write(f"**You:** {selected_messages[i][1]}")
         st.write(f"**Bot:** {selected_messages[i + 1][1]}")
 else:
-   
+    # Display the most recent message first (current question and its answer)
     col1, col2 = st.columns([9, 1])
     with col1:
         st.text_input("You: ", key="user_input", label_visibility="collapsed", on_change=handle_input)
     with col2:
         st.button("⬆️", key="arrow_button", on_click=handle_input)
 
-    for i in range(0, len(st.session_state.messages), 2):
+    # Display the most recent message first (current question and its answer)
+    if len(st.session_state.messages) > 0:
+        st.write(f"**You:** {st.session_state.messages[-2][1]}")
+        st.write(f"**Bot:** {st.session_state.messages[-1][1]}")
+
+    # Then, display the previous messages below
+    for i in range(0, len(st.session_state.messages) - 2, 2):
         st.write(f"**You:** {st.session_state.messages[i][1]}")
         st.write(f"**Bot:** {st.session_state.messages[i + 1][1]}")
