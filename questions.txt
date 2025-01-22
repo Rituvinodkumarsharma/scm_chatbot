@@ -1,0 +1,41 @@
+Price Analysis
+What is the average price of diamonds in the dataset?
+How does the price change with different carat sizes?
+What are the price trends for diamonds with different cuts?
+Can you show a comparison of prices for diamonds of various colors?
+Which clarity grades have the highest-priced diamonds?
+Carat Analysis
+What is the average carat size of the diamonds?
+Which carat size has the most diamonds in the dataset?
+How does carat size impact the price of diamonds?
+Can you show a graph of price vs. carat size?
+Cut Analysis
+What is the distribution of diamond cuts in the dataset?
+Which cut type has the most expensive diamonds?
+How does the cut quality affect the price?
+Show me a graph of the distribution of diamond cuts.
+Color and Clarity Analysis
+What is the most common color of diamonds?
+Which clarity grade is the most frequent in the dataset?
+How do clarity grades affect diamond prices?
+Can you compare prices for diamonds of different colors?
+Depth and Table Analysis
+What is the average depth and table percentage of diamonds in the dataset?
+How does the depth or table percentage affect the price of a diamond?
+Show me the relationship between table percentage and diamond prices.
+General Knowledge
+What are the 4Cs of diamonds?
+Why is diamond cut important for its sparkle?
+How are diamond prices determined?
+What is the most valuable clarity grade for diamonds?
+Can you explain the impact of diamond color on its value?
+Combination Questions
+Show the price distribution for diamonds with the "Ideal" cut and "G" color.
+Compare average prices for diamonds with VS1 and SI1 clarity grades.
+What are the price trends for diamonds with carat sizes above 1?
+How do price trends vary for different diamond cuts and colors?
+Which combination of cut, color, and clarity offers the best value?
+Interactive Examples
+"Can you display a table showing the top 5 most expensive diamonds?"
+"What are the average prices for diamonds with 'Good' and 'Very Good' cuts?"
+"Show a graph comparing prices for different clarity grades."
